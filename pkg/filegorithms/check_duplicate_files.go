@@ -74,10 +74,8 @@ func CheckDuplicateFiles(outputFile string, pathToSearch string) {
 
 	// Write results
 	writer := bufio.NewWriter(f)
-	duplicatesFound := false
 	for hash, paths := range fileHashes {
 		if len(paths) > 1 {
-			duplicatesFound = true
 			log.Println("Duplicate files found (hash:", hash, "):")
 			duplicateCount++
 			for _, path := range paths {
@@ -92,10 +90,6 @@ func CheckDuplicateFiles(outputFile string, pathToSearch string) {
 	writer.Flush()
 	dupCntStr := fmt.Sprint(duplicateCount)
 	log.Println(dupCntStr + " duplicates found.")
-
-	if !duplicatesFound {
-		log.Println("No duplicate files found.")
-	}
 }
 
 func worker(files <-chan string, results chan<- fileInfo, wg *sync.WaitGroup) {
