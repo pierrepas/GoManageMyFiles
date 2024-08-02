@@ -6,7 +6,7 @@ build:
 	go build -o bin/main ./cmd/go_manage_my_files
 
 run:
-	go run ./cmd/go_manage_my_files -output=zizi.txt
+	go run ./cmd/go_manage_my_files
 
 test:
 	go test ./...

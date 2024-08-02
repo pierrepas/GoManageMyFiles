@@ -17,7 +17,7 @@ func main() {
 	flag.Parse()
 
 	if *actionFlag == "check_duplicates" {
-		filegorithms.CheckForDuplicates(*outputFileFlag, *pathtoSearchFlag)
+		filegorithms.CheckDuplicateFiles(*outputFileFlag, *pathtoSearchFlag)
 	} else {
 		fmt.Println("Flag not recognised")
 	}

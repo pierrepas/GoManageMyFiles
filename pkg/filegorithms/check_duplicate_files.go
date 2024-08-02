@@ -17,7 +17,7 @@ type fileInfo struct {
 	hash string
 }
 
-func CheckForDuplicates(outputFile string, pathToSearch string) {
+func CheckDuplicateFiles(outputFile string, pathToSearch string) {
 	log.Println("Searching the path:", pathToSearch)
 	log.Println("Writing to file:", outputFile)
 	log.Println()
