@@ -25,6 +25,8 @@ func main() {
 
 	if *actionFlag == "check_duplicates" {
 		filegorithms.CheckDuplicateFiles(*fileName, *pathOfAction)
+	} else if *actionFlag == "check_names" {
+		filegorithms.CheckDuplicateNames(*fileName, *pathOfAction)
 	} else if *actionFlag == "vacuum_files" {
 		filegorithms.VacuumFiles(*fileName, *pathOfAction, 1)
 	} else {
