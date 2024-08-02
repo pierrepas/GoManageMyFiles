@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"go_manage_my_files/pkg/check_duplicate_files"
+	"go_manage_my_files/pkg/filegorithms"
 	"log"
 	"time"
 )
@@ -17,7 +17,7 @@ func main() {
 	flag.Parse()
 
 	if *actionFlag == "check_duplicates" {
-		check_duplicate_files.CheckForDuplicates(*outputFileFlag, *pathtoSearchFlag)
+		filegorithms.CheckForDuplicates(*outputFileFlag, *pathtoSearchFlag)
 	} else {
 		fmt.Println("Flag not recognised")
 	}
