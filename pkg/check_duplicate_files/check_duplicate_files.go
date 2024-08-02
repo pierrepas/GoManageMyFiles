@@ -5,19 +5,24 @@ import (
 	"crypto/md5"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"path/filepath"
 )
 
-func CheckForDuplicates() {
-	fmt.Print("Enter the folder path to check for duplicates: ")
-	reader := bufio.NewReader(os.Stdin)
-	folderPath, _ := reader.ReadString('\n')
-	folderPath = folderPath[:len(folderPath)-1] // Remove newline character
+func CheckForDuplicates(outputFile string, pathToSearch string) {
+	fmt.Println("Searching the path: " + pathToSearch)
+	fmt.Println("Writing to file: " + outputFile)
+	fmt.Println()
+	f, err := os.OpenFile(outputFile, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	fileHashes := make(map[string][]string)
 
-	err := filepath.Walk(folderPath, func(path string, info os.FileInfo, err error) error {
+	err = filepath.Walk(pathToSearch, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
@@ -36,6 +41,7 @@ func CheckForDuplicates() {
 		return
 	}
 
+	writer := bufio.NewWriter(f)
 	duplicatesFound := false
 	for _, paths := range fileHashes {
 		if len(paths) > 1 {
@@ -43,10 +49,14 @@ func CheckForDuplicates() {
 			fmt.Println("Duplicate files found:")
 			for _, path := range paths {
 				fmt.Println(path)
+				writer.WriteString(path + "\n")
 			}
 			fmt.Println()
+			writer.WriteString("\n")
 		}
 	}
+
+	writer.Flush()
 
 	if !duplicatesFound {
 		fmt.Println("No duplicate files found.")

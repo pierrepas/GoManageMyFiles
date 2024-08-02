@@ -1,29 +1,20 @@
 package main
 
 import (
-	"bufio"
+	"flag"
 	"fmt"
 	"go_manage_my_files/pkg/check_duplicate_files"
-	"os"
 )
 
 func main() {
-	for {
-		fmt.Println("\nWhat would you like to do?")
-		fmt.Println("1. Check for duplicates")
-		fmt.Println("2. Exit")
+	var actionFlag = flag.String("action", "check_duplicates", "What action the program should take")
+	var outputFileFlag = flag.String("output", "duplicates_found.txt", "What file the duplicates should be listed into")
+	var pathtoSearchFlag = flag.String("path", ".", "What path the duplicates should be searched from")
+	flag.Parse()
 
-		reader := bufio.NewReader(os.Stdin)
-		choice, _ := reader.ReadString('\n')
-
-		switch choice {
-		case "1\n":
-			check_duplicate_files.CheckForDuplicates()
-		case "2\n":
-			fmt.Println("Exiting program. Goodbye!")
-			return
-		default:
-			fmt.Println("Invalid choice. Please try again.")
-		}
+	if *actionFlag == "check_duplicates" {
+		check_duplicate_files.CheckForDuplicates(*outputFileFlag, *pathtoSearchFlag)
+	} else {
+		fmt.Println("Flag not recognised")
 	}
 }
