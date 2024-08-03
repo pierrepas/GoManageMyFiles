@@ -18,7 +18,7 @@ func main() {
 	startTime := time.Now()
 	log.SetFlags(0) // Removes time stamp from log
 	actionFlag := flag.String("action", "check_duplicates", "Action the program will take")
-	fileName := flag.String("filename", "duplicates_found.txt", "File of the action")
+	fileName := flag.String("filename", "files.txt", "File of the action")
 	pathOfAction := flag.String("path", ".", "Path of the action")
 	flag.Parse()
 
@@ -28,6 +28,10 @@ func main() {
 		filegorithms.CheckDuplicateNames(*fileName, *pathOfAction)
 	} else if *actionFlag == "vacuum_files" {
 		filegorithms.VacuumFiles(*fileName, *pathOfAction, 1)
+	} else if *actionFlag == "write_hashmap" {
+		filegorithms.WriteHashMap(*fileName, *pathOfAction)
+	} else {
+		log.Fatalln("Arguments not recognised, please try again")
 	}
 	timeSinceStart := time.Since(startTime)
 	log.Println()
